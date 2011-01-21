@@ -52,10 +52,6 @@ Then declare your Ability class, but include `CanOpener` rather than `CanCan::Ab
     end
     
 Remember that CanCan processes abilities in a top down fashion, so add your general abilities up top, and then things you want to override everything (like banning a user) at the bottom.  You can add line by line or multiple on one line if you wish.
-
-### But I want to check the IP Address, Project, etc, in the ability
-
-Just override your Ability#initialize and setup your accessors to be used in the `CanOpener::Ability` subclasses.
   
 Why?
 ----
@@ -66,3 +62,4 @@ Todo
 ----
 
 * Perhaps a generator for CanOpener::Ability subclasses.
+* Allow easy initializer overriding to allow additional values passed to the ability (Project, IP Address, etc)
