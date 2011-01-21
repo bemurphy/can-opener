@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["xternal1+github@gmail.com"]
   s.homepage    = "http://github.com/bemurphy/can-opener"
   s.summary     = %q{Split up your CanCan Ability}
-  s.description = %q{Split up your CanCan Ability.  Allows you to create abilities in separate classes which you declare in your main ability model.  This is mainly useful if you want to break down your abilities into smaller classes for organizational purposes.'}
+  s.description = %q{Split up your CanCan Ability by allowing you to easily create abilities in separate classes which you reference in your main ability model.  This is mainly useful if you want to break down your abilities into smaller classes for organizational purposes.'}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
