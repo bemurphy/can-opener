@@ -32,7 +32,7 @@ module CanOpener
       if has_additional_ability_arguments?
         initializer_arguments.each_with_index do |arg, idx|
           self.class.send(:attr_accessor, arg)
-          self.send("#{arg}=", args[idx])
+          send("#{arg}=", args[idx])
         end
       else
         @user = args[0]
