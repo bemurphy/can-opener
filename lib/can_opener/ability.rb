@@ -7,10 +7,16 @@ module CanOpener
     attr_accessor :user
     protected :user=
   
-    def initialize(base, user)
+    def initialize(base, *args)
       @base = base
-      self.user = user
+      setup_vars(*args)
       abilities
+    end
+    
+    protected
+    
+    def setup_vars(*args)
+      @user = args[0]
     end
   end
 end

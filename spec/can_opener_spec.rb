@@ -138,4 +138,47 @@ describe CanOpener do
       ability.should be_able_to(:read, :foo)
     end
   end
+  
+  describe "passing objects to the ability" do
+    class TakesTwoParams < CanOpener::Ability
+      attr_reader :ip_address      
+      
+      protected
+      
+      def setup_vars(*args)
+        @user = args[0]
+        @ip_address = args[1]
+      end
+    end
+    
+    class SuperAdmin < TakesTwoParams
+      def abilities
+        # Wide open, just for testing
+        can :manage, :foo
+      end
+    end
+    
+    class IPBouncer < TakesTwoParams
+      def abilities
+        cannot :manage, :foo unless ip_address =~ /^192\.168\./
+      end
+    end
+
+    class TwoParamAbility
+      include CanOpener
+      
+      configure_abilities do |c|
+        c.add SuperAdmin
+        c.add IPBouncer
+      end
+    end
+    
+    it "should allow an object in addition to the user" do
+      ability = TwoParamAbility.new(admin_user, "1.2.3.4")
+      ability.should_not be_able_to(:manage, :foo)
+      
+      ability = TwoParamAbility.new(admin_user, "192.168.1.1")
+      ability.should be_able_to(:manage, :foo)
+    end
+  end
 end

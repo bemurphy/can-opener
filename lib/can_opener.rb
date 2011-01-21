@@ -27,9 +27,9 @@ module CanOpener
     end
   end
 
-  def initialize(user)
+  def initialize(*args)
     self.class.ability_classes.each do |ability_class|
-      ability_class.new(self, user)
+      ability_class.new(self, *args)
     end
   end
 end

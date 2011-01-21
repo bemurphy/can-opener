@@ -52,6 +52,45 @@ Then declare your Ability class, but include `CanOpener` rather than `CanCan::Ab
     end
     
 Remember that CanCan processes abilities in a top down fashion, so add your general abilities up top, and then things you want to override everything (like banning a user) at the bottom.  You can add line by line or multiple on one line if you wish.
+
+### But I want to check the IP Address, Project, etc, in the ability!
+
+Inherit `CanOpener::Ability` , setup your accessors, and override the protected `setup_vars` method.  Consider the following contrived example:
+
+    class TakesTwoParams < CanOpener::Ability
+      attr_reader :ip_address      
+  
+      protected
+  
+      def setup_vars(*args)
+        @user = args[0]
+        @ip_address = args[1]
+      end
+    end
+
+    class SuperAdmin < TakesTwoParams
+      def abilities
+        # Wide open, just for testing
+        can :manage, :foo
+      end
+    end
+
+    class IPBouncer < TakesTwoParams
+      def abilities
+        cannot :manage, :foo unless ip_address =~ /^192\.168\./
+      end
+    end
+
+    class TwoParamAbility
+      include CanOpener
+  
+      configure_abilities do |c|
+        c.add SuperAdmin
+        c.add IPBouncer
+      end
+    end
+    
+Note, this feature is in flux and will probably be quickly deprecated in favor or a more declarative class method.
   
 Why?
 ----
@@ -62,4 +101,3 @@ Todo
 ----
 
 * Perhaps a generator for CanOpener::Ability subclasses.
-* Allow easy initializer overriding to allow additional values passed to the ability (Project, IP Address, etc)
