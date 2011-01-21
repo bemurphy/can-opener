@@ -5,7 +5,6 @@ module CanOpener
     class << self;
       attr_accessor :initializer_arguments
     end
-    # superclass_delegating_reader :initializer_arguments
 
     def_delegators :@base, *CanCan::Ability.public_instance_methods
     
