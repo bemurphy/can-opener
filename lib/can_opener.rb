@@ -1,6 +1,5 @@
-require "cancan"
 require "forwardable"
-
+require "cancan"
 require "can_opener/ability"
 
 module CanOpener
