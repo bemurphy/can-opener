@@ -55,8 +55,8 @@ describe CanOpener do
   
   let(:admin_user) { user_double(:admin? => true) }  
   let(:support_user) { user_double(:support? => true) }
-  let (:reader_user) { user_double }
-  let (:banned_user) { user_double(:admin? => true, :banned? => true) }
+  let(:reader_user) { user_double }
+  let(:banned_user) { user_double(:admin? => true, :banned? => true) }
 
   describe "loading abilities" do
     before(:each) { @ability = Ability.new(admin_user) }
