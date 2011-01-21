@@ -55,11 +55,11 @@ Remember that CanCan processes abilities in a top down fashion, so add your gene
 
 ### But I want to check the IP Address, Project, etc, in the ability!
 
-Inherit `CanOpener::Ability` , setup your accessors, use the `aditional_ability_arguments` class method.  Consider the following contrived example:
+Inherit `CanOpener::Ability` , setup your accessors, use the `additional_ability_arguments` class method.  Consider the following contrived example:
 
     class TakesIpAddress < CanOpener::Ability
       attr_reader :ip_address      
-      aditional_ability_arguments :ip_address
+      additional_ability_arguments :ip_address
     end
 
     class SuperAdmin < TakesIpAddress

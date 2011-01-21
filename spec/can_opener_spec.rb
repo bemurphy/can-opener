@@ -142,7 +142,7 @@ describe CanOpener do
   describe "passing objects to the ability" do
     class TakesIpAddress < CanOpener::Ability
       attr_reader :ip_address      
-      aditional_ability_arguments :ip_address
+      additional_ability_arguments :ip_address
     end
     
     class SuperAdmin < TakesIpAddress
