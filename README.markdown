@@ -55,27 +55,21 @@ Remember that CanCan processes abilities in a top down fashion, so add your gene
 
 ### But I want to check the IP Address, Project, etc, in the ability!
 
-Inherit `CanOpener::Ability` , setup your accessors, and override the protected `setup_vars` method.  Consider the following contrived example:
+Inherit `CanOpener::Ability` , setup your accessors, use the `aditional_ability_arguments` class method.  Consider the following contrived example:
 
-    class TakesTwoParams < CanOpener::Ability
+    class TakesIpAddress < CanOpener::Ability
       attr_reader :ip_address      
-  
-      protected
-  
-      def setup_vars(*args)
-        @user = args[0]
-        @ip_address = args[1]
-      end
+      aditional_ability_arguments :ip_address
     end
 
-    class SuperAdmin < TakesTwoParams
+    class SuperAdmin < TakesIpAddress
       def abilities
         # Wide open, just for testing
         can :manage, :foo
       end
     end
 
-    class IPBouncer < TakesTwoParams
+    class IPBouncer < TakesIpAddress
       def abilities
         cannot :manage, :foo unless ip_address =~ /^192\.168\./
       end
@@ -90,8 +84,6 @@ Inherit `CanOpener::Ability` , setup your accessors, and override the protected 
       end
     end
     
-Note, this feature is in flux and will probably be quickly deprecated in favor or a more declarative class method.
-  
 Why?
 ----
 

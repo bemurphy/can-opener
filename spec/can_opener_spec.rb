@@ -140,25 +140,19 @@ describe CanOpener do
   end
   
   describe "passing objects to the ability" do
-    class TakesTwoParams < CanOpener::Ability
+    class TakesIpAddress < CanOpener::Ability
       attr_reader :ip_address      
-      
-      protected
-      
-      def setup_vars(*args)
-        @user = args[0]
-        @ip_address = args[1]
-      end
+      aditional_ability_arguments :ip_address
     end
     
-    class SuperAdmin < TakesTwoParams
+    class SuperAdmin < TakesIpAddress
       def abilities
         # Wide open, just for testing
         can :manage, :foo
       end
     end
     
-    class IPBouncer < TakesTwoParams
+    class IPBouncer < TakesIpAddress
       def abilities
         cannot :manage, :foo unless ip_address =~ /^192\.168\./
       end
